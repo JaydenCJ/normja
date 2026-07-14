@@ -1,0 +1,197 @@
+[
+  {
+    "note": "kanji block numerals, official long form (Tokyo Station)",
+    "input": "東京都千代田区丸の内一丁目九番一号",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "東京都",
+      "city": "千代田区",
+      "area": "丸の内1-9-1",
+      "building": null,
+      "normalized": "東京都千代田区丸の内1-9-1",
+      "warnings": []
+    }
+  },
+  {
+    "note": "postal mark, full-width digits and dashes",
+    "input": "〒100-0005 東京都千代田区丸の内１−９−１",
+    "expected": {
+      "postalCode": "1000005",
+      "prefecture": "東京都",
+      "city": "千代田区",
+      "area": "丸の内1-9-1",
+      "building": null,
+      "normalized": "東京都千代田区丸の内1-9-1",
+      "warnings": []
+    }
+  },
+  {
+    "note": "LLM-style label prefix, mixed counters, building after ideographic space",
+    "input": "住所：東京都千代田区丸の内1丁目9番1号　新丸ビル",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "東京都",
+      "city": "千代田区",
+      "area": "丸の内1-9-1",
+      "building": "新丸ビル",
+      "normalized": "東京都千代田区丸の内1-9-1 新丸ビル",
+      "warnings": []
+    }
+  },
+  {
+    "note": "missing prefecture, inferred from unique ward",
+    "input": "千代田区丸の内1-9-1",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "東京都",
+      "city": "千代田区",
+      "area": "丸の内1-9-1",
+      "building": null,
+      "normalized": "東京都千代田区丸の内1-9-1",
+      "warnings": ["prefecture-inferred"]
+    }
+  },
+  {
+    "note": "designated city with ward, prefecture inferred",
+    "input": "横浜市西区みなとみらい２丁目２−１",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "神奈川県",
+      "city": "横浜市西区",
+      "area": "みなとみらい2-2-1",
+      "building": null,
+      "normalized": "神奈川県横浜市西区みなとみらい2-2-1",
+      "warnings": ["prefecture-inferred"]
+    }
+  },
+  {
+    "note": "glued building name split via keyword (Yokohama Landmark Tower)",
+    "input": "神奈川県横浜市西区みなとみらい２－２－１ランドマークタワー",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "神奈川県",
+      "city": "横浜市西区",
+      "area": "みなとみらい2-2-1",
+      "building": "ランドマークタワー",
+      "normalized": "神奈川県横浜市西区みなとみらい2-2-1 ランドマークタワー",
+      "warnings": ["building-heuristic"]
+    }
+  },
+  {
+    "note": "Osaka Station area, chome + dash mix",
+    "input": "大阪府大阪市北区梅田３丁目１−１",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "大阪府",
+      "city": "大阪市北区",
+      "area": "梅田3-1-1",
+      "building": null,
+      "normalized": "大阪府大阪市北区梅田3-1-1",
+      "warnings": []
+    }
+  },
+  {
+    "note": "town name 一番町 protected from numeral conversion",
+    "input": "東京都千代田区一番町２３",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "東京都",
+      "city": "千代田区",
+      "area": "一番町23",
+      "building": null,
+      "normalized": "東京都千代田区一番町23",
+      "warnings": []
+    }
+  },
+  {
+    "note": "ambiguous city name: 府中市 exists in Tokyo and Hiroshima",
+    "input": "府中市宮西町2丁目24",
+    "expected": {
+      "postalCode": null,
+      "prefecture": null,
+      "city": "府中市",
+      "area": "宮西町2-24",
+      "building": null,
+      "normalized": "府中市宮西町2-24",
+      "warnings": ["ambiguous-city", "prefecture-missing"]
+    }
+  },
+  {
+    "note": "old glyph 區 normalized (Tokyo Metropolitan Government)",
+    "input": "東京都新宿區西新宿二丁目八番一号",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "東京都",
+      "city": "新宿区",
+      "area": "西新宿2-8-1",
+      "building": null,
+      "normalized": "東京都新宿区西新宿2-8-1",
+      "warnings": []
+    }
+  },
+  {
+    "note": "gun-cho municipality with banchi (Niseko town office)",
+    "input": "北海道虻田郡ニセコ町字富士見４７番地",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "北海道",
+      "city": "虻田郡ニセコ町",
+      "area": "字富士見47",
+      "building": null,
+      "normalized": "北海道虻田郡ニセコ町字富士見47",
+      "warnings": []
+    }
+  },
+  {
+    "note": "prolonged sound mark used as a dash between digits",
+    "input": "東京都渋谷区道玄坂２ー１ー１",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "東京都",
+      "city": "渋谷区",
+      "area": "道玄坂2-1-1",
+      "building": null,
+      "normalized": "東京都渋谷区道玄坂2-1-1",
+      "warnings": []
+    }
+  },
+  {
+    "note": "city ending in 市市 resolved by dictionary (Yokkaichi city hall)",
+    "input": "三重県四日市市諏訪町１番５号",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "三重県",
+      "city": "四日市市",
+      "area": "諏訪町1-5",
+      "building": null,
+      "normalized": "三重県四日市市諏訪町1-5",
+      "warnings": []
+    }
+  },
+  {
+    "note": "bare ward outside Tokyo flags a probably-dropped designated city",
+    "input": "大阪府北区梅田1-1",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "大阪府",
+      "city": "北区",
+      "area": "梅田1-1",
+      "building": null,
+      "normalized": "大阪府北区梅田1-1",
+      "warnings": ["ward-without-city"]
+    }
+  },
+  {
+    "note": "no connector at all: の-style block numbers",
+    "input": "愛知県名古屋市中村区名駅1の1の4",
+    "expected": {
+      "postalCode": null,
+      "prefecture": "愛知県",
+      "city": "名古屋市中村区",
+      "area": "名駅1-1-4",
+      "building": null,
+      "normalized": "愛知県名古屋市中村区名駅1-1-4",
+      "warnings": []
+    }
+  }
+]

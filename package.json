@@ -1,0 +1,61 @@
+{
+  "name": "normja",
+  "version": "0.1.0",
+  "description": "Japanese data normalization toolkit: addresses, postal codes, person names, corporate numbers. Offline, zero dependencies, built for cleaning up LLM output.",
+  "keywords": [
+    "japanese",
+    "address",
+    "normalization",
+    "postal-code",
+    "zipcode",
+    "kana",
+    "corporate-number",
+    "houjin-bangou",
+    "ken-all",
+    "japan"
+  ],
+  "license": "MIT",
+  "author": "JaydenCJ",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "normja-kenall": "./dist/cli/kenall.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "README.zh.md",
+    "README.ja.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "smoke": "bash scripts/smoke.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaydenCJ/normja.git"
+  },
+  "homepage": "https://github.com/JaydenCJ/normja#readme",
+  "bugs": {
+    "url": "https://github.com/JaydenCJ/normja/issues"
+  }
+}
